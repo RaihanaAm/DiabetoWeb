@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Patient</title>
+</head>
+
+<body class="p-3">
+
+    <!-- navbaar -->
+    <div class="w-100 d-flex align-items-center  m-2">
+
+
+        <div class="col-3">
+            <img src="../images/logo.png" class="w-25" alt="">
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-end ">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="./login.html">Connexion</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="./signin.html">Creation du
+                                    compte</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./home.html">Acceuil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./patient.html">Patient</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <!-- fin navbar -->
+
+
+    <section class="login w-100 d-flex align-items-center  m-2 ">
+        <div class="w-100 d-flex align-items-center justify-content-center">
+            <form class="w-25 formLogin">
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="exampleInputname" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="exampleInput name1" aria-describedby=" nameHelp">
+                    </div>
+                    <div class="mb-3  col-6">
+                        <label for="exampleInputage" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="exampleInputAge1" aria-describedby=" AgeHelp">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputname" class="form-label">Sex
+                    </label>
+                    <select class="form-control" id="exampleInputsex" name="Sex" id="">
+                        <option value="0">Homme</option>
+                        <option value="1">Femme</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date de création</label>
+                     <input type="date" class="form-control" id="exampleInputDateCreation" aria-describedby=" pedigreeHelp">
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="exampleInputglucos" class="form-label">Glucos</label>
+                        <input type="number" class="form-control" id="exampleInput glucos1"
+                            aria-describedby=" glucosHelp">
+                    </div>
+                    <div class="mb-3  col-6">
+                        <label for="exampleInputbmi" class="form-label">Bmi</label>
+                        <input type="number" class="form-control" id="exampleInputbmi1" aria-describedby=" bmiHelp">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="exampleInputbloodpressure" class="form-label">Bloodpressure</label>
+                        <input type="number" class="form-control" id="exampleInput bloodpressure1"
+                            aria-describedby=" bloodpressureHelp">
+                    </div>
+                    <div class="mb-3  col-6">
+                        <label for="exampleInputpedigree" class="form-label">Pedigree</label>
+                        <input type="number" class="form-control" id="exampleInputpedigree1" aria-describedby=" pedigreeHelp">
+                    </div>
+                </div>
+
+                 
+
+                <button type="submit" class=" btn w-100  btn-primary">Créer Patient</button>
+            </form>
+        </div>
+
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
