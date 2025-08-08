@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for ,flash ,session
+from flask import Flask, render_template, request, redirect, url_for ,flash ,session ,jsonify
 from sqlalchemy import Table, MetaData, insert
 from sqlalchemy.exc import IntegrityError 
 from werkzeug.security import generate_password_hash ,check_password_hash
@@ -7,6 +7,10 @@ from werkzeug.security import generate_password_hash ,check_password_hash
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, MetaData , Table,Column ,Integer , String ,Float ,DateTime ,ForeignKey ,insert ,select
+
+# Bibliotheque pour le module
+import joblib
+import numpy as np
 
 # ** la connexion avec la base de données
 
@@ -210,7 +214,7 @@ def list_patients():
         flash("Veuillez vous connecter.")
         return redirect("/login")
 
-
+    
     with engine.connect() as conn:
         doctor = conn.execute(select(medecins.c.id).where(medecins.c.username == session["username"])).fetchone()
         doctor_id = doctor[0] if doctor else None
@@ -235,5 +239,67 @@ def delete_patient(patient_id):
     flash("Patient supprimé avec succès.")
     return redirect("/patients")
 
+
+
+#** le modele
+# Charger le modèle entraîné
+model = joblib.load(r"C:\Users\ULTRAPC\Downloads\Dev_IA\challenges\sprint2\DiabetoWeb\Model\model.pkl") 
+
+@app.route("/predict/<int:patient_id>")
+def predict(patient_id):
+    if "username" not in session:
+        flash("Veuillez vous connecter.")
+        return redirect("/login")
+
+    try:
+        # Connexion DB
+        with engine.connect() as conn:
+            # Récupération des données du patient
+            query = select(
+                patients.c.glucose,
+                patients.c.bmi,
+                patients.c.age,
+                patients.c.pedigree
+            ).where(patients.c.id == patient_id)
+
+            patient = conn.execute(query).fetchone()
+
+            if not patient:
+                flash("Patient introuvable.")
+                return redirect("/patients")
+
+            # Features dans l’ordre attendu par le modèle
+            features = [
+                patient.glucose,
+                patient.bmi,
+                patient.age,
+                patient.pedigree
+            ]
+
+            input_array = np.array(features).reshape(1, -1)
+
+            # Prédiction
+            cluster = model.predict(input_array)[0]
+            risk_mapping = {
+                0: "Faible/Modéré",
+                1: "Haut Risque",
+                2: "Faible/Modéré",
+                3: "Haut Risque",
+                4: "Faible/Modéré"
+            }
+            risk = risk_mapping.get(cluster, "Inconnu")
+
+            flash(f"Résultat prédiction: {risk} (Cluster {cluster})")
+
+    except Exception as e:
+        flash(f"Erreur lors de la prédiction : {e}")
+
+    return redirect("/patients")
+
+
+
+
+# lancment du serveur
 if __name__ == "__main__":
     app.run(debug=True)
+
