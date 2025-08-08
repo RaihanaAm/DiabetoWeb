@@ -8,56 +8,52 @@
 
  <section class="login w-100 d-flex align-items-center  m-2 ">
         <div class="w-100 d-flex align-items-center justify-content-center">
-            <form class="w-25 formLogin" method="POST" action="/patient">
+            <form class="w-25 formLogin" method="POST" action="/submit">
                 <div class="row">
                     <div class="mb-3 col-6">
-                        <label for="exampleInputname" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="exampleInput name1" aria-describedby=" nameHelp">
+                        <label  class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" required>
                     </div>
                     <div class="mb-3  col-6">
-                        <label for="exampleInputage" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="exampleInputAge1" aria-describedby=" AgeHelp">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-control" name="age" required>
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleInputname" class="form-label">Sex
-                    </label>
-                    <select class="form-control" id="exampleInputsex" name="Sex" id="">
+                    <label  class="form-label">Sex</label>
+                    <select class="form-control" name="sex" required >
                         <option value="0">Homme</option>
                         <option value="1">Femme</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Date de création</label>
-                     <input type="date" class="form-control" id="exampleInputDateCreation" aria-describedby=" pedigreeHelp">
+                     <input type="date" class="form-control" name="created_at" required>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-6">
-                        <label for="exampleInputglucos" class="form-label">Glucos</label>
-                        <input type="number" class="form-control" id="exampleInput glucos1"
-                            aria-describedby=" glucosHelp">
+                        <label  class="form-label">Glucos</label>
+                        <input type="number" class="form-control" name="glucose" required>
                     </div>
                     <div class="mb-3  col-6">
-                        <label for="exampleInputbmi" class="form-label">Bmi</label>
-                        <input type="number" class="form-control" id="exampleInputbmi1" aria-describedby=" bmiHelp">
+                        <label  class="form-label">Bmi</label>
+                        <input type="number" class="form-control" name="bmi" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="mb-3 col-6">
-                        <label for="exampleInputbloodpressure" class="form-label">Bloodpressure</label>
-                        <input type="number" class="form-control" id="exampleInput bloodpressure1"
-                            aria-describedby=" bloodpressureHelp">
+                        <label  class="form-label">Bloodpressure</label>
+                        <input type="number" class="form-control" name="bloodpressure" required>
                     </div>
                     <div class="mb-3  col-6">
-                        <label for="exampleInputpedigree" class="form-label">Pedigree</label>
-                        <input type="number" class="form-control" id="exampleInputpedigree1" aria-describedby=" pedigreeHelp">
+                        <label  class="form-label">Pedigree</label>
+                        <input type="number" class="form-control" name="pedigree" required>
                     </div>
                 </div>
 
-                 
-
+                
                 <button type="submit" class=" btn w-100  btn-primary">Créer Patient</button>
             </form>
         </div>

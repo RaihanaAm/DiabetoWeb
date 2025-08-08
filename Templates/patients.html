@@ -1,0 +1,25 @@
+<!-- templates/patients.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Liste des patients</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th><th>Âge</th><th>Sexe</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in patients %}
+        <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.age }}</td>
+            <td>{{ "Homme" if p.sex == 0 else "Femme" }}</td>
+            <td>
+                <a href="{{ url_for('delete_patient', patient_id=p.id) }}" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

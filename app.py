@@ -34,6 +34,7 @@ app.secret_key = 'une_clé_très_secrète_et_complexe_ici'  # <-- Ajoutez cette 
 metadata = MetaData()
 #autoload_with=engine  sert à charger automatiquement la structure d'une table existante depuis la base de données.
 medecins = Table("medecins", metadata, autoload_with=engine)
+patients = Table("patients", metadata, autoload_with=engine)
 
 #^^ Page d'accueil 
 @app.route("/")
@@ -150,6 +151,89 @@ def logout():
 @app.route("/patient" ,methods=["GET", "POST"])
 def patient():
     return render_template("patient.html")
+
+
+#^^ Ajouter patient
+@app.route("/submit", methods=["POST"])
+def submit_patient():
+    if "username" not in session:
+        flash("Veuillez vous connecter.")
+        return redirect("/login")
+
+    # Récupération des données du formulaire
+    name = request.form.get("name")
+    age = request.form.get("age")
+    sex = request.form.get("sex")
+    glucose = request.form.get("glucose")
+    bmi = request.form.get("bmi")
+    bloodpressure = request.form.get("bloodpressure")
+    pedigree = request.form.get("pedigree")
+    created_at = request.form.get("created_at") or None
+
+    # Récupérer l'id du docteur connecté
+    username = session["username"]
+
+
+    with engine.connect() as conn:
+        doctor_id_query = select(medecins.c.id).where(medecins.c.username == username)
+        result = conn.execute(doctor_id_query).fetchone()
+
+        if result:
+            doctor_id = result[0]
+
+            # Insérer dans patients
+            stmt = insert(patients).values(
+                doctor_id=doctor_id,
+                name=name,
+                age=age,
+                sex=sex,
+                glucose=glucose,
+                bmi=bmi,
+                bloodpressure=bloodpressure,
+                pedigree=pedigree,
+                created=created_at
+            )
+            conn.execute(stmt)
+            conn.commit()
+
+            flash("Patient ajouté avec succès.")
+        else:
+            flash("Erreur : médecin introuvable.")
+
+    return redirect("/patients")
+
+
+#^^ affichages de tout les patient 
+@app.route("/patients")
+def list_patients():
+    if "username" not in session:
+        flash("Veuillez vous connecter.")
+        return redirect("/login")
+
+
+    with engine.connect() as conn:
+        doctor = conn.execute(select(medecins.c.id).where(medecins.c.username == session["username"])).fetchone()
+        doctor_id = doctor[0] if doctor else None
+
+        # if doctor_id is None:
+        #     flash("Erreur : médecin introuvable.")
+        #     return redirect("/login")
+
+        query = select(patients).where(patients.c.doctor_id == doctor_id)
+        result = conn.execute(query).fetchall()
+
+    return render_template("patients.html", patients=result)
+
+
+@app.route("/delete/<int:patient_id>")
+def delete_patient(patient_id):
+    
+    with engine.connect() as conn:
+        conn.execute(patients.delete().where(patients.c.id == patient_id))
+        conn.commit()
+
+    flash("Patient supprimé avec succès.")
+    return redirect("/patients")
 
 if __name__ == "__main__":
     app.run(debug=True)
